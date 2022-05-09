@@ -11,6 +11,8 @@ public class PlanePlacementManager : MonoBehaviour
     public Transform botLeft;
     public Transform botRight;
 
+    public Transform grid;
+
     private Material mat;
 
     // Start is called before the first frame update
@@ -107,6 +109,12 @@ public class PlanePlacementManager : MonoBehaviour
         scale.x = Vector3.Distance(gizmos[0,0].position,gizmos[1,0].position);
         scale.y = Vector3.Distance(gizmos[0,0].position, gizmos[0,1].position);
         transform.localScale = scale;
+    }
+
+    public void placeCanvas(){
+        grid.gameObject.SetActive(true);
+        grid.parent = transform.parent;
+        GameObject.Destroy(gameObject);
     }
 }
 
