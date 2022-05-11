@@ -9,7 +9,7 @@ public class InOutTrans_Manager : MonoBehaviour
 
     public bool fadeout = false;
 
-    public Vector3 targetScale;
+    public Vector3 targetScale = new Vector3(0,0,0);
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,7 @@ public class InOutTrans_Manager : MonoBehaviour
     }
 
     private void OnEnable() {
-        if(targetScale == new Vector3(0,0,0)) targetScale = transform.localScale;
+        if(targetScale == new Vector3(0,0,0))targetScale = transform.localScale;
         transform.localScale = new Vector3(0,0,0);
         LeanTween.scale(gameObject,targetScale,EaseTime).setEase(EaseIn).setDelay(Delay);
     }
