@@ -2400,10 +2400,34 @@ MonoBehaviour:
         m_CallState: 2
   onHoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 751466903}
+        m_TargetAssemblyTypeName: FrameBehaviour, Assembly-CSharp
+        m_MethodName: onHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onHoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 751466903}
+        m_TargetAssemblyTypeName: FrameBehaviour, Assembly-CSharp
+        m_MethodName: offHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &751466896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2563,7 +2587,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad394a154bed974b9074b6bedbdc519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  defaultColor: {r: 1, g: 0.8235294, b: 0.19607843, a: 0}
+  selectedColor: {r: 0.3150943, g: 1, b: 0.3767034, a: 0}
+  deleteColor: {r: 0.7529412, g: 0, b: 0, a: 0}
 --- !u!1 &927999342
 GameObject:
   m_ObjectHideFlags: 0

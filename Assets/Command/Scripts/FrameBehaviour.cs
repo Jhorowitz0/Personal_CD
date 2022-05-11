@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class FrameBehaviour : MonoBehaviour
 {
-    public Transform canvas = null;
+    private Transform canvas = null;
     bool isOnGrid = false; //is the frame ready to be deleted?
     bool isMoving = false; //is the frame being moved right now
     
     private GameObject displayFrame;
+
+    public Color defaultColor;
+    public Color selectedColor;
+
+    public Color deleteColor;
+
+    private Material displayFrameMat;
 
     // Start is called before the first frame update
 
     private void Start() {
         transform.parent = null;
         displayFrame = transform.GetChild(0).gameObject;
+        if(displayFrame != null) displayFrameMat = displayFrame.GetComponent<Renderer>().material;
     }
     // Update is called once per frame
     void Update()
@@ -73,21 +81,36 @@ public class FrameBehaviour : MonoBehaviour
             canvas = other.transform;
             displayFrame.transform.parent = null;
             isOnGrid = true;
+            LeanTween.color(displayFrame,selectedColor,0.2f).setEase(LeanTweenType.easeInQuad);
+            displayFrameMat.SetFloat("_isBlinking",0);
         }
     }
 
     private void OnCollisionExit(Collision other) {
         if(other.gameObject.layer == 7){
             isOnGrid = false;
+            LeanTween.color(displayFrame,deleteColor,0.2f).setEase(LeanTweenType.easeInQuad);
+            displayFrameMat.SetFloat("_isBlinking",1f);
         }
     }
 
     public void UpdateIsMoving(bool state){
         isMoving = state;
+        Color targetColor = defaultColor;
+        if(state) targetColor = selectedColor;
+        LeanTween.color(displayFrame,targetColor,0.2f).setEase(LeanTweenType.easeInQuad);
         if(!state && !isOnGrid){
             GameObject.Destroy(displayFrame);
             GameObject.Destroy(gameObject);
         }
+    }
+
+    public void onHover(){
+        LeanTween.value(gameObject,0,0.15f,0.2f).setEase(LeanTweenType.easeInQuad).setOnUpdate((float val) =>{displayFrameMat.SetFloat("Background",val);});
+    }
+
+    public void offHover(){
+        LeanTween.value(gameObject,0.15f,0,0.3f).setEase(LeanTweenType.easeInQuad).setOnUpdate((float val) =>{displayFrameMat.SetFloat("Background",val);});
     }
 
 }
