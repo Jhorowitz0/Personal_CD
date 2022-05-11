@@ -6,7 +6,7 @@ public class FrameBehaviour : MonoBehaviour
 {
     private Transform canvas = null;
     bool isOnGrid = false; //is the frame ready to be deleted?
-    bool isMoving = false; //is the frame being moved right now
+    bool isMoving = true; //is the frame being moved right now
     
     private GameObject displayFrame;
 

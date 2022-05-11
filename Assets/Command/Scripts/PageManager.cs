@@ -9,6 +9,8 @@ public class PageManager : MonoBehaviour
     public int PageNumber = 0;
     private int nextPage = 0;
     private Transform CurrentPage;
+
+    public Transform pageNavigation;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,5 +63,9 @@ public class PageManager : MonoBehaviour
                 TransitionScript.OnHide();
             }
         }
+    }
+
+    public void toggleNav(bool state){
+        pageNavigation.gameObject.SetActive(state);
     }
 }
