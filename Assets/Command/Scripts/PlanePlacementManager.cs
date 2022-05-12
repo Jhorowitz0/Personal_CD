@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.SpatialAwareness;
 
 public class PlanePlacementManager : MonoBehaviour
 {
@@ -25,6 +27,14 @@ public class PlanePlacementManager : MonoBehaviour
         gizmos[0,1] = topLeft;
         gizmos[1,1] = transform.GetChild(3);
         selected = new Vector2(-1,-1);
+    }
+
+    public void spawn(Transform reference){
+        transform.parent = reference.parent;
+        //transform.position = reference.position;
+        //transform.eulerAngles = reference.eulerAngles;
+        GameObject.Destroy(reference.gameObject);
+        gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -112,9 +122,25 @@ public class PlanePlacementManager : MonoBehaviour
     }
 
     public void placeCanvas(){
+        disableSpatialAwareness();
         grid.gameObject.SetActive(true);
         grid.parent = transform.parent;
+        grid.localScale = new Vector3(grid.localScale.x,grid.localScale.y,0.01f);
         GameObject.Destroy(gameObject);
+    }
+
+    void disableSpatialAwareness(){
+        // Use CoreServices to quickly get access to the IMixedRealitySpatialAwarenessSystem
+        var spatialAwarenessService = CoreServices.SpatialAwarenessSystem;
+
+        // Cast to the IMixedRealityDataProviderAccess to get access to the data providers
+        var dataProviderAccess = spatialAwarenessService as IMixedRealityDataProviderAccess;
+
+        var meshObserver = dataProviderAccess.GetDataProvider<IMixedRealitySpatialAwarenessMeshObserver>();
+        meshObserver.Suspend();
+
+        spatialAwarenessService.ClearObservations();
+        spatialAwarenessService.Disable();
     }
 }
 

@@ -37,7 +37,7 @@ public class FrameSpawner : MonoBehaviour
         gameObject.GetComponent<Renderer>().enabled = true;
         if(frame != null){
             frame.GetComponent<TapToPlace>().StopPlacement();
-            frame.GetComponent<FrameBehaviour>().UpdateIsMoving(false);
+            frame.transform.GetChild(0).gameObject.GetComponent<FrameBehaviour>().UpdateIsMoving(false);
             frame = null;
         }
         text.gameObject.SetActive(true);
@@ -52,7 +52,7 @@ public class FrameSpawner : MonoBehaviour
 
     private void spawnFrame(){
         frame = GameObject.Instantiate<GameObject>(framePrefab);
-        frame.transform.localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,frame.transform.localScale.z);
+        frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,0.01f);
         frame.transform.position = transform.position;
         frame.GetComponent<TapToPlace>().StartPlacement();
     }
