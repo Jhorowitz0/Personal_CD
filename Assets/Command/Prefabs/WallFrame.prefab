@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 532241512790775535}
   - component: {fileID: 532241512790775532}
   - component: {fileID: 532241512790775533}
+  - component: {fileID: 8989657856690809626}
   m_Layer: 0
   m_Name: WallFrame
   m_TagString: Untagged
@@ -99,7 +100,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.01}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.002}
 --- !u!114 &532241512790775534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +287,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8989657856690809626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532241512790775530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: -1
+  proximityType: -1
+  constraintOnRotation: -1
+  useLocalSpaceForConstraint: 0
 --- !u!1 &532241513287652334
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +333,7 @@ Transform:
   m_GameObject: {fileID: 532241513287652334}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.01}
+  m_LocalScale: {x: 1, y: 1, z: 0.011}
   m_Children:
   - {fileID: 532241513504974728}
   m_Father: {fileID: 532241512790775522}

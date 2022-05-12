@@ -17,13 +17,6 @@ public class FrameBehaviour : MonoBehaviour
 
     private Material displayFrameMat;
 
-    public GameObject minus;
-    public GameObject gridMinus;
-
-    public GameObject plus;
-
-    public GameObject gridPlus;
-
     // Start is called before the first frame update
 
     private void Start() {
@@ -45,59 +38,27 @@ public class FrameBehaviour : MonoBehaviour
     //snaps display frame to canvas grid
     void gridSnap()
     {
-        // Vector3 localPos = canvas.InverseTransformPoint(transform.position);
-        // Vector3 localScale = new Vector3(transform.localScale.x * canvas.localScale.x,transform.localScale.y * canvas.localScale.y,1f);
-        // Vector3 gridPos = canvas.InverseTransformPoint(transform.position);
-        // Vector3 minusPoint = canvas.InverseTransformPoint(transform.position - (transform.localScale/2));
-        // minusPoint.z = 0;
-        // Vector3 plusPoint = canvas.InverseTransformPoint(transform.position - (transform.localScale/2));
-
-        // float leftXPos = getNearestGridValue(minusPoint.x, canvas.localScale.x) + ((transform.localScale.x/canvas.localScale.x)/2f);
-        // float rightXPos = getNearestGridValue(plusPoint.x, canvas.localScale.x) - ((transform.localScale.x/canvas.localScale.x)/2f);
-        // float leftDist = dist(localPos.x,leftXPos);
-        // float rightDist = dist(localPos.x,rightXPos);
-        // if(leftDist < rightDist)gridPos.x = leftXPos;
-        // else gridPos.x = rightXPos;
-
-        // float botYPos = getNearestGridValue(minusPoint.y, canvas.localScale.y) + ((transform.localScale.y/canvas.localScale.y)/2f);
-        // float topYPos = getNearestGridValue(plusPoint.y, canvas.localScale.y) - ((transform.localScale.y/canvas.localScale.y)/2f);
-        // float topDist = dist(localPos.y,topYPos);
-        // float botDist = dist(localPos.y,botYPos);
-        // if(topDist < botDist) gridPos.y = topYPos;
-        // else gridPos.y = botYPos;
-
-        // displayFrame.transform.position = canvas.TransformPoint(gridPos);
-
         float gridSpacing = 0.6f;
         Vector3 localPos = canvas.InverseTransformPoint(transform.position);
         localPos.z = 0;
-        Vector3 offset = new Vector3(transform.localScale.x / canvas.localScale.x,transform.localScale.x / canvas.localScale.x,0f) * 0.5f;
+        Vector3 offset = new Vector3(transform.localScale.x / canvas.localScale.x,transform.localScale.y / canvas.localScale.y,0f) * 0.5f;
         Vector3 minusPos = localPos - offset;
-        Vector3 minusGridPos = nearestGridPos(localPos - offset,canvas.localScale,gridSpacing);
+        Vector3 minusGridPos = new Vector3(getNearestGridValue(minusPos.x,canvas.localScale.x,gridSpacing),getNearestGridValue(minusPos.y,canvas.localScale.y,gridSpacing),0f);
         Vector3 plusPos = localPos + offset;
-        Vector3 plusGridPos = nearestGridPos(localPos + offset,canvas.localScale,gridSpacing);
+        Vector3 plusGridPos = new Vector3(getNearestGridValue(plusPos.x,canvas.localScale.x,gridSpacing),getNearestGridValue(plusPos.y,canvas.localScale.y,gridSpacing),0f);
 
-        localPos.x = minusPos.x;
-        minus.transform.position = canvas.TransformPoint(localPos);
-        localPos.x = minusGridPos.x;
-        Debug.Log(minusGridPos.x);
-        gridMinus.transform.position = canvas.TransformPoint(localPos);
-        localPos.x = plusPos.x;
-        plus.transform.position = canvas.TransformPoint(localPos);
-        localPos.x = plusGridPos.x;
-        gridPlus.transform.position = canvas.TransformPoint(localPos);
+        if(dist(minusPos.x,minusGridPos.x) < dist(plusPos.x,plusGridPos.x)) localPos.x = minusGridPos.x + offset.x;
+        else localPos.x = plusGridPos.x - offset.x;
 
-        // Debug.Log(dist(minusPos.x,minusGridPos.x) + "," + dist(plusPos.x,plusGridPos.x));
-        
-        // if(dist(minusPos.x,minusGridPos.x) < dist(plusPos.x,plusGridPos.x)) localPos.x = minusGridPos.x + offset.x;
-        // else localPos.x = plusGridPos.x - offset.x;
+        if(dist(minusPos.y,minusGridPos.y) < dist(plusPos.y,plusGridPos.y)) localPos.y = minusGridPos.y + offset.y;
+        else localPos.y = plusGridPos.y - offset.y;
 
         displayFrame.transform.position = canvas.TransformPoint(localPos);
+        displayFrame.transform.rotation = canvas.transform.rotation;
     }
 
     private Vector3 nearestGridPos(Vector3 pos, Vector3 scale, float gridSpacing){
         Vector3 result = pos;
-        result.x += 0.5f; result.y += 0.5f;
         result = new Vector3(result.x * scale.x, result.y * scale.y,0f);
         result.x = Mathf.Round(result.x / gridSpacing) * gridSpacing;
         result.y = Mathf.Round(result.y / gridSpacing) * gridSpacing;
@@ -110,11 +71,10 @@ public class FrameBehaviour : MonoBehaviour
     }
 
     //given a value and a grid scale, round to the nearest point
-    float getNearestGridValue(float v, float scale){
-        float gridSize = 0.254f;
-        v = (v + 0.5f) * scale;
-        v = Mathf.Round(v / gridSize) * gridSize;
-        return (v / scale) - 0.5f;
+    float getNearestGridValue(float v, float scale, float gridSpacing){
+        v *= scale;
+        v = Mathf.Round(v / gridSpacing) * gridSpacing;
+        return (v / scale);
     }
 
     private void OnCollisionEnter(Collision other) { //on a collision

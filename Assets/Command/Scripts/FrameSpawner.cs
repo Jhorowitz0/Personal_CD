@@ -52,7 +52,7 @@ public class FrameSpawner : MonoBehaviour
 
     private void spawnFrame(){
         frame = GameObject.Instantiate<GameObject>(framePrefab);
-        frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,0.01f);
+        frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,0.011f);
         frame.transform.position = transform.position;
         frame.GetComponent<TapToPlace>().StartPlacement();
     }
