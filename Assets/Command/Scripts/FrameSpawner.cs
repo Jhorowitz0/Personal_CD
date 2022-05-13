@@ -20,7 +20,7 @@ public class FrameSpawner : MonoBehaviour
     }
 
     void initialize(){
-        startPos = transform.parent.position;
+        startPos = transform.parent.localPosition;
         if(size.x > size.y) transform.localScale = new Vector3(1f,size.y/size.x,1f);
         else transform.localScale = new Vector3(size.x/size.y,1f,1f);
         Vector2 units = size;
@@ -33,7 +33,7 @@ public class FrameSpawner : MonoBehaviour
     }
 
     public void onRelease(){
-        transform.parent.position = startPos;
+        transform.parent.localPosition = startPos;
         gameObject.GetComponent<Renderer>().enabled = true;
         if(frame != null){
             frame.GetComponent<TapToPlace>().StopPlacement();
