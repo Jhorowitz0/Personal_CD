@@ -20,6 +20,7 @@ public class FrameSpawner : MonoBehaviour
     }
 
     public void initialize(){
+        Debug.Log("initialized");
         startPos = transform.parent.localPosition;
         if(size.x > size.y) transform.localScale = new Vector3(1f,size.y/size.x,1f);
         else transform.localScale = new Vector3(size.x/size.y,1f,1f);

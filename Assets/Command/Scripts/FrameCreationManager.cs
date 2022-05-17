@@ -66,6 +66,7 @@ public class FrameCreationManager : MonoBehaviour
         GameObject newFrame = GameObject.Instantiate<GameObject>(framePrefab);
         newFrame.transform.GetChild(0).GetComponent<FrameSpawner>().size = measurements;
         newFrame.transform.parent = Library.transform;
+        newFrame.transform.localScale = new Vector3(0.05f,0.005f,0.05f);
         Library.UpdateCollection();
         foreach(Transform child in Library.transform){
             FrameSpawner script = child.GetChild(0).GetComponent<FrameSpawner>();

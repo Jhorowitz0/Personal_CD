@@ -20,7 +20,7 @@ public class FrameBehaviour : MonoBehaviour
     // Start is called before the first frame update
 
     private void Start() {
-        displayFrame = transform.GetChild(0).gameObject;
+        if(transform.childCount > 0) displayFrame = transform.GetChild(0).gameObject;
         if(displayFrame != null) displayFrameMat = displayFrame.GetComponent<Renderer>().material;
     }
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class FrameBehaviour : MonoBehaviour
     //snaps display frame to canvas grid
     void gridSnap()
     {
-        float gridSpacing = 0.6f;
+        float gridSpacing = 0.0762f;
         Vector3 localPos = canvas.InverseTransformPoint(transform.position);
         localPos.z = 0;
         Vector3 offset = new Vector3(transform.localScale.x / canvas.localScale.x,transform.localScale.y / canvas.localScale.y,0f) * 0.5f;
@@ -118,5 +118,40 @@ public class FrameBehaviour : MonoBehaviour
     public void offHover(){
         LeanTween.value(gameObject,0.15f,0,0.3f).setEase(LeanTweenType.easeInQuad).setOnUpdate((float val) =>{displayFrameMat.SetFloat("Background",val);});
     }
+
+    public void destroyFrame(){
+        GameObject.Destroy(displayFrame);
+        GameObject.Destroy(transform.parent.gameObject);
+        GameObject.Destroy(gameObject);
+    }
+
+    public void InstantiateFrame(){
+        GameObject clone = GameObject.Instantiate<GameObject>(transform.parent.gameObject);
+        clone.transform.position = transform.parent.position;
+        clone.transform.rotation = transform.parent.rotation;
+        GameObject displayClone = GameObject.Instantiate<GameObject>(displayFrame);
+        displayClone.transform.position = displayFrame.transform.position;
+        displayClone.transform.rotation = displayFrame.transform.rotation;
+        clone.transform.GetChild(0).GetComponent<FrameBehaviour>().setDisplayFrame(displayClone);
+        clone.transform.GetChild(0).GetComponent<FrameBehaviour>().show(true);
+    }
+
+    public void show(bool state){
+        displayFrame.SetActive(state);
+        transform.parent.gameObject.SetActive(state);
+        isMoving = false;
+        isOnGrid = true;
+        displayFrameMat.SetFloat("Background",0.15f);
+        LeanTween.value(gameObject,0.15f,0,0.3f).setEase(LeanTweenType.easeInQuad).setDelay(0.3f).setOnUpdate((float val) =>{displayFrameMat.SetFloat("Background",val);});
+        LeanTween.color(displayFrame,defaultColor,0.3f).setEase(LeanTweenType.easeInQuad).setDelay(0.3f);
+    }
+
+    public void setDisplayFrame(GameObject frame){
+        displayFrame = frame;
+        displayFrameMat = displayFrame.GetComponent<Renderer>().material;
+        displayFrameMat.SetColor("Color",defaultColor);
+    }
+
+
 
 }
