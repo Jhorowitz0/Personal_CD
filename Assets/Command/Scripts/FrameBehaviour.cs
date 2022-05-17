@@ -38,7 +38,8 @@ public class FrameBehaviour : MonoBehaviour
     //snaps display frame to canvas grid
     void gridSnap()
     {
-        float gridSpacing = 0.0762f;
+        float gridSpacing = canvas.GetComponent<GridManager>().getGridSpacing();
+        Debug.Log(gridSpacing);
         Vector3 localPos = canvas.InverseTransformPoint(transform.position);
         localPos.z = 0;
         Vector3 offset = new Vector3(transform.localScale.x / canvas.localScale.x,transform.localScale.y / canvas.localScale.y,0f) * 0.5f;
