@@ -79,7 +79,10 @@ public class MeasuringToolManager : MonoBehaviour
         float dist = Vector3.Distance(outerRing2.transform.position, outerRing.transform.position);
         float scale = 100f;
         if(!isMetric)scale = 39.3701f;
+        scale *= 2;
         dist = Mathf.Round(dist*scale);
+        dist = dist/2;
+
         if(isMetric) return dist + "cm";
         else return dist + "in";
     }
