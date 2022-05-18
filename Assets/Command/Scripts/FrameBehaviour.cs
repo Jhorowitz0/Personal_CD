@@ -137,9 +137,17 @@ public class FrameBehaviour : MonoBehaviour
         clone.transform.GetChild(0).GetComponent<FrameBehaviour>().show(true);
     }
 
-    public void show(bool state){
-        displayFrame.SetActive(state);
+    public void show(bool state,int layer = 8){
+        int FrameLayer = layer;
+        if(state){
+            FrameLayer = 0;
+            displayFrame.layer = 0;
+        } else displayFrame.layer = 11;
+        displayFrame.transform.GetChild(0).gameObject.SetActive(!state);
+        displayFrame.transform.GetChild(0).gameObject.layer = layer;
+        //displayFrame.SetActive(state);
         transform.parent.gameObject.SetActive(state);
+        transform.parent.gameObject.layer = FrameLayer;
         isMoving = false;
         isOnGrid = true;
         displayFrameMat.SetFloat("Background",0.15f);
