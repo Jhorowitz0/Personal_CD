@@ -61202,7 +61202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a66cd0102fe4a4ba00dfa8785ae607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 18, y: 24}
+  size: {x: 30, y: 40}
   framePrefab: {fileID: 532241512790775530, guid: bbbe4fd40dc0c5f4badf34e62101a3b0, type: 3}
   text: {fileID: 2042771419}
 --- !u!114 &1411513856

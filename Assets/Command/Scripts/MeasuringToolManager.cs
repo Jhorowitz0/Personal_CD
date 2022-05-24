@@ -17,7 +17,7 @@ public class MeasuringToolManager : MonoBehaviour
     public MeasuringToolManager tool2;
 
     private bool isMoving;
-    private bool isMetric = false;
+    private bool isMetric = true;
 
     private void Update() {
         if(isMoving){

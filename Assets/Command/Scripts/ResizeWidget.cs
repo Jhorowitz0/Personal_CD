@@ -15,7 +15,7 @@ public class ResizeWidget : MonoBehaviour
     public TextMeshProUGUI text;
 
     private bool isMoving;
-    private bool isMetric = false;
+    private bool isMetric = true;
 
     private void OnEnable() {
         outerRing.transform.localPosition = new Vector3(0,0,0);
