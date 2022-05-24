@@ -47,8 +47,12 @@ public class FrameCreationManager : MonoBehaviour
     }
 
     public void updateText(){
-        WidthText.text = measurements[0] + "in";
-        HeightText.text = measurements[1] + "in";
+        string w = "" + measurements[0];
+        if(measurements[0] % 1 == 0) w += ".0";
+        string h = "" + measurements[1];
+        if(measurements[1] % 1 == 0) h += ".0";
+        WidthText.text = w;
+        HeightText.text = h;
     }
 
     public void toggleHalf(){

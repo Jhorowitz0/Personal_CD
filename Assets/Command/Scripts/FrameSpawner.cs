@@ -26,7 +26,7 @@ public class FrameSpawner : MonoBehaviour
         else transform.localScale = new Vector3(size.x/size.y,1f,1f);
         Vector2 units = size;
         units = new Vector2(Mathf.Round(units.x / 0.5f)*0.5f,Mathf.Round(units.y / 0.5f)*0.5f); //convert to nearest 0.5in
-        text.text = units.x + "in x " + units.y + "in";
+        text.text = units.x + "cm x " + units.y + "cm";
     }
 
     public void onGrab(){
@@ -53,7 +53,8 @@ public class FrameSpawner : MonoBehaviour
 
     private void spawnFrame(){
         frame = GameObject.Instantiate<GameObject>(framePrefab);
-        frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,0.011f);
+        //frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.0254f,size.y * 0.0254f,0.011f);
+        frame.transform.GetChild(0).localScale = new Vector3(size.x * 0.01f,size.y * 0.01f,0.011f);
         frame.transform.position = transform.position;
         frame.GetComponent<TapToPlace>().StartPlacement();
     }

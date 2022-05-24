@@ -10,6 +10,8 @@ public class PageManager : MonoBehaviour
     private int nextPage = 0;
     private Transform CurrentPage;
 
+    public GameObject pageIndicator;
+
     public Transform pageNavigation;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,10 @@ public class PageManager : MonoBehaviour
         HidePage(CurrentPage);
         LeanTween.moveLocalY(CurrentPage.gameObject,CurrentPage.localPosition.y - 0.011f,0.3f);
         LeanTween.moveLocalY(Background.gameObject,Background.localPosition.y - 0.02f,0.3f).setOnComplete(onComplete);
+
+        if(newPage == 1)LeanTween.moveLocalZ(pageIndicator,0.0428f,0.2f).setEase(LeanTweenType.easeInOutQuad);
+        if(newPage == 2)LeanTween.moveLocalZ(pageIndicator,-0.0105f,0.2f).setEase(LeanTweenType.easeInOutQuad);
+        if(newPage == 3)LeanTween.moveLocalZ(pageIndicator,-0.0619f,0.2f).setEase(LeanTweenType.easeInOutQuad);
     }
 
     IEnumerator AfterDelay(float t){
